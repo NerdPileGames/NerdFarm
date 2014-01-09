@@ -21,7 +21,7 @@ function moveGopher(id)
         tmp = theField.grid[newX][newY].sprite
         print('--@moveGopher: checking '..newX..','..newY..' for gopher move.')
         print('--@moveGopher: type= '..tmp.myType..' and pest proof = ',tmp.pestProof)
-        if not tmp.pestProof and tmp.id~=id then
+        if not tmp.pestProof and tmp.id~=id and not (newX..','..newY)==clickedID then
             break
         end
     end
