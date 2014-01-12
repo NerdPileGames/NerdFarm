@@ -6,7 +6,7 @@ function spawnGopher()
         x = math.random(1, 5)
         y = math.random(1, 5)
         tmp = theField.grid[x][y]
-        if tmp.sprite.empty then
+        if tmp.sprite.empty and not tmp.blocked then
             break
         end
     end
@@ -22,7 +22,7 @@ function moveGopher(id)
         tmp = theField.grid[newX][newY].sprite
         print('--@moveGopher: checking '..newX..','..newY..' for gopher move.')
         print('--@moveGopher: type= '..tmp.myType..' and pest proof = ',tmp.pestProof)
-        if not tmp.pestProof and tmp.id~=id and (newX..','..newY)~=clickedID then
+        if not tmp.pestProof and tmp.id~=id and (newX..','..newY)~=clickedID and not theField.grid[newX][newY].blocked then
             break
         end
     end
@@ -40,10 +40,11 @@ function killGopher(id)
 end
 
 function onSquareTap(self, event)
+    print(event.x, event.y)
     local target  = event.target
     local phase   = event.phase
     local touchID = event.id
-    local parent  = target.parent
+    local parent = self:square()
     local nextElement = {}
     if theBasket.sprite.selected then
         nextElement = theBasket.sprite.type
@@ -56,38 +57,21 @@ function onSquareTap(self, event)
     print('----------@onSquareTap: Square: '..self.id..' empty?')
     print(self.empty)
     clickedID = self.id
-    if self.empty then
-        if nextElement ~= "Mallet" then
-            ------------------------------------------------------------
-            --Event listener for key release
-            --If the square is empty and the next entry in the queue
-            --    is a plant
-            --Add the next plant to this square, give it a stage and
-            --    progress of 0 and set empty to false
-            --Then, call the next-day function.
-            ------------------------------------------------------------
-            print("--@onSquareTap: placing a "..nextElement.." at "..self.id)
-            self.isPlant=true
-            getSquare(self.id):setImage(nextElement, 0)
-        end
-        if theBasket.sprite.selected then
-            theBasket:empty()
-        else
-            theQueue:nextEntry()
-        end
-        theField:nextDay()
-    end
-    if not self.empty then
-        if nextElement == 'Mallet' and self.myStage ~= Plants.mature then
-            print('--@onSquareTap: Mallet')
-            -- Use the mallet on a Gopher *SMACK*
-            if self.myType=="Gopher" then
-                killGopher(self.id)
-            --Use the mallet to prune this square
-            elseif self.myType~="Rock" then
-                print('--@onSquareTap: pruning')
-                print(self.id)
-                getSquare(self.id):clearImage()
+    print(parent.id)
+    if not parent.blocked then
+        if self.empty then
+            if nextElement ~= "Mallet" then
+                ------------------------------------------------------------
+                --Event listener for key release
+                --If the square is empty and the next entry in the queue
+                --    is a plant
+                --Add the next plant to this square, give it a stage and
+                --    progress of 0 and set empty to false
+                --Then, call the next-day function.
+                ------------------------------------------------------------
+                print("--@onSquareTap: placing a "..nextElement.." at "..self.id)
+                self.isPlant=true
+                getSquare(self.id):setImage(nextElement, 0)
             end
             if theBasket.sprite.selected then
                 theBasket:empty()
@@ -95,19 +79,39 @@ function onSquareTap(self, event)
                 theQueue:nextEntry()
             end
             theField:nextDay()
-        elseif self.myStage==Plants.mature then
-            print("--@onSquareTap: harvest")
-            clickAction = "harvest"
-            theField:nextDay()
-            square = theField.first
-            while square do
-                square.checked = false
-                square = square.next
+        end
+        if not self.empty then
+            if nextElement == 'Mallet' and self.myStage ~= Plants.mature then
+                print('--@onSquareTap: Mallet')
+                -- Use the mallet on a Gopher *SMACK*
+                if self.myType=="Gopher" then
+                    killGopher(self.id)
+                --Use the mallet to prune this square
+                elseif self.myType~="Rock" then
+                    print('--@onSquareTap: pruning')
+                    print(self.id)
+                    getSquare(self.id):clearImage()
+                end
+                if theBasket.sprite.selected then
+                    theBasket:empty()
+                else
+                    theQueue:nextEntry()
+                end
+                theField:nextDay()
+            elseif self.myStage==Plants.mature then
+                print("--@onSquareTap: harvest")
+                clickAction = "harvest"
+                theField:nextDay()
+                square = theField.first
+                while square do
+                    square.checked = false
+                    square = square.next
+                end
+            elseif self.myStage==Plants.rot then
+                print("--@onSquareTap: clear")
+                clickAction = "clear"
+                theField:nextDay()
             end
-        elseif self.myStage==Plants.rot then
-            print("--@onSquareTap: clear")
-            clickAction = "clear"
-            theField:nextDay()
         end
     end
     return true

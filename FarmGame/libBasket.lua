@@ -9,7 +9,7 @@ Basket = class(function(basket)
         sprite.y = theField.Basket.Y
         sprite.touch = onBasketTouch
         sprite:addEventListener("touch", sprite)
-        layers.field:insert(sprite)
+        layers.frame:insert(sprite)
         basket.sprite = sprite
 
         local decorator = display.newSprite(myImageSheet,

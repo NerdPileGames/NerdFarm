@@ -14,26 +14,25 @@ Field = class(function(field, type)
         field.gophers = 0
         field.grid = {}
         bg = display.newImage(field.bg)
-        bg.x = centerX
-        bg.y = centerY
-        bg.width = display.contentWidth
-        bg.height = display.contentHeight
+        bg.anchorX = 0
+        bg.anchorY = 0
+        bg.x = 0
+        bg.y = 0
         layers.field:insert(bg)
         print('ROWS: '..field.rows)
         return field
     end)
 
 function Field:fill()
-    for i=1,self.rows do
+    for i=1,self.columns do
         self.grid[i] = {}
-        for j=1,self.columns do
+        for j=1,self.rows do
             self.grid[i][j]={}
             --local tmp = createSquare(layers.field, 'static', i..','..j)
-            x = self.X + (i-1)*((self.W/self.columns)-6)
-            y = self.Y + (j-1)*((self.H/self.rows)+6)
+            x = self.X + (i-1)*((self.W/self.columns))
+            y = self.Y + (j-1)*((self.H/self.rows))
             local tmp = FarmElement(x, y, i, j)
             self.grid[i][j] = tmp
-            layers.field:insert(tmp.sprite)
         end
     end
     self.first = self.grid[1][1]
@@ -48,18 +47,28 @@ function Field:cleanup()
     square = self.first
     while square do
         tmp = square.sprite
-        tmp.checked=false
-        if tmp.isPlant then
-            if tmp.myStage==0 then
-                tmp:setSequence('seqSeeds')
-            elseif tmp.isBarren then
-                tmp:setSequence('seqBarren')
+        tmp.checked = false
+        if tmp.empty == true then
+            tmp:setSequence('seqBlank')
+        end
+        square = square.next
+    end
+    while square do
+        tmp = square.sprite
+        if not tmp.empty then
+            if tmp.isPlant then
+                if tmp.myStage==0 then
+                    tmp:setSequence('seqSeeds')
+                elseif tmp.isBarren then
+                    tmp:setSequence('seqBarren')
+                else
+                    tmp:setSequence('seq'..tmp.myType)
+                    tmp:setFrame(tmp.myStage)
+                end
             else
+                print(mytype)
                 tmp:setSequence('seq'..tmp.myType)
-                tmp:setFrame(tmp.myStage)
             end
-        else
-            tmp:setSequence('seq'..tmp.myType)
         end
         square = square.next
     end
@@ -82,7 +91,7 @@ function Field:nextDay()
     square = self.first
     while square do
         sprite = square.sprite
-        if sprite.id~=clickedID and sprite.empty==false then
+        if sprite.id~=clickedID and not sprite.empty then
             if sprite.myType=='Gopher' and sprite.checked == false then
                 print('--@nextDay: Gopher at '..sprite.id..' moves')
                 moveGopher(sprite.id)

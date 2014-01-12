@@ -11,69 +11,6 @@ local widget = require("widget")
 --
 ---------------------------------------------------------------------------------
 
-
-local widget = require( "widget" )
-
--- Our ScrollView listener
-local function scrollListener( event )
-    local phase = event.phase
-    local direction = event.direction
-
-    if "began" == phase then
-        --print( "Began" )
-    elseif "moved" == phase then
-        --print( "Moved" )
-    elseif "ended" == phase then
-        --print( "Ended" )
-    end
-
-    -- If the scrollView has reached it's scroll limit
-    if event.limitReached then
-        if "up" == direction then
-            print( "Reached Top Limit" )
-        elseif "down" == direction then
-            print( "Reached Bottom Limit" )
-        elseif "left" == direction then
-            print( "Reached Left Limit" )
-        elseif "right" == direction then
-            print( "Reached Right Limit" )
-        end
-    end
-
-    return true
-end
-
--- Create a ScrollView
-local scrollView = widget.newScrollView
-{
-    left = 10,
-    top = 100,
-    width = 500,
-    height = 0,
-    scrollWidth = 1500,
-    id = "onBottom",
-    horizontalScrollDisabled = false,
-    verticalScrollDisabled = true,
-    listener = scrollListener,
-}
-
-function onLevelTouch(self, event)
-    local target  = event.target
-    local phase   = event.phase
-    local touchID = event.id
-    local parent  = self.parent
-
-    if( not touchesAllowed ) then return true end
-    if( target.isBase ) then return true end
-
-
-    print('my field')
-    print(self.field)
-    fieldType = self.field
-    storyboard:gotoScene('farm_screen')
-
-    return true
-end
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
@@ -81,23 +18,94 @@ end
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
     local screenGroup = self.view
+
     bg = display.newImage('images/fieldBackground.png')
+    bg.anchorX = 0
+    bg.anchorY = 0
     screenGroup:insert(bg)
+
+    -- Our ScrollView listener
+    local function scrollListener( event )
+        local phase = event.phase
+        local direction = event.direction
+
+        if "began" == phase then
+            --print( "Began" )
+        elseif "moved" == phase then
+            --print( "Moved" )
+        elseif "ended" == phase then
+            --print( "Ended" )
+        end
+
+        -- If the scrollView has reached it's scroll limit
+        if event.limitReached then
+            if "up" == direction then
+                print( "Reached Top Limit" )
+            elseif "down" == direction then
+                print( "Reached Bottom Limit" )
+            elseif "left" == direction then
+                print( "Reached Left Limit" )
+            elseif "right" == direction then
+                print( "Reached Right Limit" )
+            end
+        end
+
+        return true
+    end
+
+    -- Create a ScrollView
+    local scrollView = widget.newScrollView
+    {
+        left = 0,
+        top = 0,
+        width = display.contentWidth,
+        height = display.contentHeight,
+        anchorX = 0,
+        anchorY = 0,
+        --scrollWidth = 1500,
+        hideBackground = true,
+        id = "onBottom",
+        horizontalScrollDisabled = false,
+        verticalScrollDisabled = true,
+        listener = scrollListener,
+    }
+
+    screenGroup:insert(scrollView)
+
+    function onLevelTouch(self, event)
+        local target  = event.target
+        local phase   = event.phase
+        local touchID = event.id
+        local parent  = self.parent
+
+        if( not touchesAllowed ) then return true end
+        if( target.isBase ) then return true end
+
+
+        print('my field')
+        print(self.field)
+        fieldType = self.field
+        storyboard:gotoScene('farm_screen')
+
+        return true
+    end
+
     numFields = 0
+
     for i, val in pairs(fields) do
         numFields = numFields + 1
         thumb = display.newImage(fields[i].thumb)
+        thumb.anchorX = 0
+        thumb.y = display.contentHeight/2
         thumb.field = i
         thumb.tap = onLevelTouch
         thumb:addEventListener("tap", thumb )
         thumb.x = (numFields-1)*600 +300
-        thumb.y = 300
+        screenGroup:insert(thumb)
         scrollView:insert(thumb)
+        print('add thumb')
+        print(fields[i].thumb)
     end
-
-    screenGroup:insert(scrollView)
-
-    timer.performWithDelay(10, function() touchesAllowed = true end)
 
 end
 

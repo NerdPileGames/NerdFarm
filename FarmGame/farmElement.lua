@@ -3,18 +3,26 @@ require 'plants'
 require 'fieldEvents'
 
 FarmElement = class(function(elem, x, y, i, j)
+            for num, v in pairs(theField.blocked) do
+                if i == v[1] and j == v[2] then
+                    elem.blocked = true
+                end
+            end
+
             local sprite = display.newSprite(myImageSheet, sheetInfo:getSequenceData())
             sprite:setSequence("seqBlank")
-            sprite.alpha = .1
+            sprite.alpha = .01
             sprite.empty = true
             sprite.x = x
             sprite.y = y
+
             local decorator = display.newSprite(myImageSheet,
                 sheetInfo:getSequenceData())
             decorator:setSequence("seqBlank")
-            decorator.alpha = .1
+            decorator.alpha = .01
             decorator.x = x
             decorator.y = y
+
 
             sprite.row = j
             sprite.column = i
@@ -51,26 +59,38 @@ function FarmElement:setNeighbors()
     x = sprite.column
     y = sprite.row
     if x > 1 then
-        sprite.neighbors.left = theField.grid[x-1][y].sprite
+        tmp = theField.grid[x-1][y]
+        if not tmp.blocked then
+            sprite.neighbors.left = tmp.sprite
+        end
     end
     if y > 1 then
-        sprite.neighbors.above = theField.grid[x][y-1].sprite
+        tmp = theField.grid[x][y-1]
+        if not tmp.blocked then
+            sprite.neighbors.above = tmp.sprite
+        end
     end
     if x < theField.columns then
-        sprite.neighbors.right = theField.grid[x+1][y].sprite
+        tmp = theField.grid[x+1][y]
+        if not tmp.blocked then
+            sprite.neighbors.right = tmp.sprite
+        end
     end
     if y < theField.rows then
-        sprite.neighbors.below = theField.grid[x][y+1].sprite
+        tmp = theField.grid[x][y+1]
+        if not tmp.blocked then
+            sprite.neighbors.below = tmp.sprite
+        end
     end
 end
 
 function FarmElement:initialize()
+    print("--@FarmElement:initialize(): "..self.id)
     self:setSpriteFunctions()
     local sprite = self.sprite
     self:setNeighbors()
-    if sprite.neighbors.right then
-        print(sprite.neighbors.right:square())
-        self.next = sprite.neighbors.right:square()
+    if sprite.column < theField.columns then
+        self.next = theField.grid[sprite.column + 1][sprite.row]
     elseif sprite.row < theField.rows then
         self.next = theField.grid[1][sprite.row + 1]
     end
@@ -136,7 +156,7 @@ function FarmElement:setImage(type, phase)
             if self.sprite.myStage == Plants.rot then
                 self:setDecorator('smell')
             elseif self.sprite.myStage == Plants.mature then
-                --self:setDecorator('tag')
+                self:setDecorator('tag')
             else
                 self:clearDecorator()
             end
@@ -169,6 +189,7 @@ function FarmElement:clearImage()
     self.sprite.pestProof = false
     self.sprite.isPlant = false
     self.sprite.checked = false
+    self:clearDecorator()
 end
 
 function FarmElement:makeBarren()

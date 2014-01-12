@@ -32,11 +32,12 @@ function scene:createScene( event )
     local screenGroup = self.view
 
     bg = display.newImage('images/fieldBackground.png')
+    bg.anchorX = 0
+    bg.anchorY = 0
     screenGroup:insert(bg)
 
     text1 = display.newText( "Farmaggedon!", 0, 0, native.systemFontBold, 50 )
     text1:setTextColor( 255 )
-    text1:setReferencePoint( display.CenterReferencePoint )
     text1.x, text1.y = display.contentWidth * 0.5, 300
     screenGroup:insert( text1 )
     local FarmButton = widget.newButton

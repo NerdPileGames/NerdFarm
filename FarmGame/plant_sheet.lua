@@ -563,8 +563,8 @@ SheetInfo.sequenceData =
     { name="seqRadish", frames={26, 27, 28, 29}},
     { name="seqRock", frames={ 30 }},
     { name="seqSeeds", frames={ 31 }},
-    { name="seqSmell", frames={33, 34, 35, 36 }, time=225},
-    { name="seqTag", frames={ 38 }},
+    { name="seqSmell", frames={32, 33, 34, 35 }, time=225},
+    { name="seqTag", frames={ 37 }},
 }
 
 function SheetInfo:getSequenceData()

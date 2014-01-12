@@ -1,4 +1,5 @@
 local storyboard = require( "storyboard" )
+local widget = require('widget')
 local scene = storyboard.newScene()
 
 ----------------------------------------------------------------------------------
@@ -24,21 +25,69 @@ function scene:createScene( event)
     local group = self.view
 
     layers = display.newGroup()
+    local function scrollListener( event )
+        local phase = event.phase
+        local direction = event.direction
+
+        if "began" == phase then
+            --print( "Began" )
+        elseif "moved" == phase then
+            --print( "Moved" )
+        elseif "ended" == phase then
+            --print( "Ended" )
+        end
+
+        -- If the scrollView has reached it's scroll limit
+        if event.limitReached then
+            if "up" == direction then
+                print( "Reached Top Limit" )
+            elseif "down" == direction then
+                print( "Reached Bottom Limit" )
+            elseif "left" == direction then
+                print( "Reached Left Limit" )
+            elseif "right" == direction then
+                print( "Reached Right Limit" )
+            end
+        end
+
+        return true
+    end
+    layers.field = widget.newScrollView
+    {
+        left = 0,
+        top = 0,
+        width = display.contentWidth,
+        height = display.contentHeight,
+        anchorX = 0,
+        anchorY = 0,
+        --scrollWidth = 1500,
+        hideBackground = true,
+        id = "onBottom",
+        horizontalScrollDisabled = false,
+        verticalScrollDisabled = false,
+        listener = scrollListener,
+    }
+
     layers.frame = display.newGroup()
-    layers.field = display.newGroup()
     layers.overlays = display.newGroup()
-    print('field = '..fieldType)
+
     theField = Field(fieldType)
-    print('--@create: rows: ')
-    print(theField.grid)
+
+    frame_img = display.newImage('images/tray.png')
+    frame_img.anchorX = 0
+    frame_img.anchorY = 0
+    frame_img.y = 45
+    layers.frame:insert(frame_img)
 
 
 --> Set Label
     scoreHUD = display.newText(0, 0, 0, gameFont, 42)
+    scoreHUD.anchorX = 0
+    scoreHUD.anchorY = 0
     scoreHUD.x = 170
-    scoreHUD.y = 80
-    scoreHUD:setTextColor(51, 16, 95)
-
+    scoreHUD.y = 60
+    scoreHUD:setTextColor(0, 0, 0)
+    layers.frame:insert(scoreHUD)
     --> Define Square and Queue Tables
     print('--@create: Create Field')
 
@@ -47,11 +96,11 @@ function scene:createScene( event)
     theQueue:fill()
     theBasket = Basket()
 
-    timer.performWithDelay(10, function() touchesAllowed = true end)
-    layers:insert(layers.frame)
-    layers:insert(layers.field)
-    layers:insert(layers.overlays)
+    layers.field:insert(layers.overlays)
 
+    timer.performWithDelay(10, function() touchesAllowed = true end)
+    layers:insert(layers.field)
+    layers:insert(layers.frame)
     group:insert(layers)
 
 end

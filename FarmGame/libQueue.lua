@@ -97,5 +97,6 @@ function libQueue:fill()
         tmp.y = theField.Queue.Y - (i-1)*125
         tmp:setSequence("seq" .. val.square_type)
         val.sprite = tmp
+        layers.frame:insert(tmp)
     end
 end
