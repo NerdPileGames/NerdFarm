@@ -36,8 +36,8 @@ FarmElement = class(function(elem, x, y, i, j)
                 return theField.grid[sprite.column][sprite.row]
             end
             sprite.next = false
-            sprite.touch = onSquareTouch
-            sprite:addEventListener("touch", sprite)
+            sprite.tap = onSquareTap
+            sprite:addEventListener("tap", sprite)
 
             layers.field:insert(sprite)
             layers.overlays:insert(decorator)

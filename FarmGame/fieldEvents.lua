@@ -39,7 +39,7 @@ function killGopher(id)
     theField.gophers = theField.gophers - 1
 end
 
-function onSquareTouch(self, event)
+function onSquareTap(self, event)
     local target  = event.target
     local phase   = event.phase
     local touchID = event.id
@@ -51,29 +51,43 @@ function onSquareTouch(self, event)
         nextElement = theQueue[1].square_type
     end
     local nextIsPlant = nextElement ~= 'Mallet'
-    if( not touchesAllowed ) then return true end
-    if( target.isBase ) then return true end
-    if( phase == "began" ) then
-        display.getCurrentStage():setFocus( target, touchID )
-        target.isFocus = true
-    elseif( self.isFocus and phase == 'ended') then
-        print('--------------@onSquareTouch: click registered')
-        print('----------@onSquareTouch: Square: '..self.id..' empty?')
-        print(self.empty)
-        clickedID = self.id
-        if self.empty then
-            if nextElement ~= "Mallet" then
-                ------------------------------------------------------------
-                --Event listener for key release
-                --If the square is empty and the next entry in the queue
-                --    is a plant
-                --Add the next plant to this square, give it a stage and
-                --    progress of 0 and set empty to false
-                --Then, call the next-day function.
-                ------------------------------------------------------------
-                print("--@onSquareTouch: placing a "..nextElement.." at "..self.id)
-                self.isPlant=true
-                getSquare(self.id):setImage(nextElement, 0)
+
+    print('--------------@onSquareTap: click registered')
+    print('----------@onSquareTap: Square: '..self.id..' empty?')
+    print(self.empty)
+    clickedID = self.id
+    if self.empty then
+        if nextElement ~= "Mallet" then
+            ------------------------------------------------------------
+            --Event listener for key release
+            --If the square is empty and the next entry in the queue
+            --    is a plant
+            --Add the next plant to this square, give it a stage and
+            --    progress of 0 and set empty to false
+            --Then, call the next-day function.
+            ------------------------------------------------------------
+            print("--@onSquareTap: placing a "..nextElement.." at "..self.id)
+            self.isPlant=true
+            getSquare(self.id):setImage(nextElement, 0)
+        end
+        if theBasket.sprite.selected then
+            theBasket:empty()
+        else
+            theQueue:nextEntry()
+        end
+        theField:nextDay()
+    end
+    if not self.empty then
+        if nextElement == 'Mallet' and self.myStage ~= Plants.mature then
+            print('--@onSquareTap: Mallet')
+            -- Use the mallet on a Gopher *SMACK*
+            if self.myType=="Gopher" then
+                killGopher(self.id)
+            --Use the mallet to prune this square
+            elseif self.myType~="Rock" then
+                print('--@onSquareTap: pruning')
+                print(self.id)
+                getSquare(self.id):clearImage()
             end
             if theBasket.sprite.selected then
                 theBasket:empty()
@@ -81,43 +95,19 @@ function onSquareTouch(self, event)
                 theQueue:nextEntry()
             end
             theField:nextDay()
-        end
-        if not self.empty then
-            if nextElement == 'Mallet' and self.myStage ~= Plants.mature then
-                print('--@onSquareTouch: Mallet')
-                -- Use the mallet on a Gopher *SMACK*
-                if self.myType=="Gopher" then
-                    killGopher(self.id)
-                --Use the mallet to prune this square
-                elseif self.myType~="Rock" then
-                    print('--@onSquareTouch: pruning')
-                    print(self.id)
-                    getSquare(self.id):clearImage()
-                end
-                if theBasket.sprite.selected then
-                    theBasket:empty()
-                else
-                    theQueue:nextEntry()
-                end
-                theField:nextDay()
-            elseif self.myStage==Plants.mature then
-                print("--@onSquareTouch: harvest")
-                clickAction = "harvest"
-                theField:nextDay()
-                square = theField.first
-                while square do
-                    square.checked = false
-                    square = square.next
-                end
-            elseif self.myStage==Plants.rot then
-                print("--@onSquareTouch: clear")
-                clickAction = "clear"
-                theField:nextDay()
+        elseif self.myStage==Plants.mature then
+            print("--@onSquareTap: harvest")
+            clickAction = "harvest"
+            theField:nextDay()
+            square = theField.first
+            while square do
+                square.checked = false
+                square = square.next
             end
-        end
-        if( phase == "ended" or phase == "cancelled" ) then
-            display.getCurrentStage():setFocus( nil )
-            target.isFocus = false
+        elseif self.myStage==Plants.rot then
+            print("--@onSquareTap: clear")
+            clickAction = "clear"
+            theField:nextDay()
         end
     end
     return true
