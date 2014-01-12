@@ -1,7 +1,7 @@
 --
 -- created with TexturePacker (http://www.codeandweb.com/texturepacker)
 --
--- $TexturePacker:SmartUpdate:80040d93a2caaa581fb2f35da23ab625:ea8d9c7b218d775fe8aab0c000802970:b9dd8805c19c2414352d792dfe80739f$
+-- $TexturePacker:SmartUpdate:ef4d506f67c3c0a87ba23d05a8a8b006:5176641d2715fcf2b0ad00077e437795:b9dd8805c19c2414352d792dfe80739f$
 --
 -- local sheetInfo = require("mysheet")
 -- local myImageSheet = graphics.newImageSheet( "mysheet.png", sheetInfo:getSheet() )
@@ -15,9 +15,37 @@ SheetInfo.sheet =
     frames = {
 
         {
-            -- blank
-            x=719,
+            -- arrow-left
+            x=1799,
+            y=216,
+            width=31,
+            height=52,
+
+        },
+        {
+            -- arrow-right
+            x=1766,
+            y=216,
+            width=31,
+            height=52,
+
+        },
+        {
+            -- barren
+            x=921,
             y=2,
+            width=157,
+            height=151,
+
+            sourceX = 3,
+            sourceY = 0,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- blank
+            x=1245,
+            y=147,
             width=125,
             height=125,
 
@@ -28,8 +56,8 @@ SheetInfo.sheet =
         },
         {
             -- carrot01
-            x=654,
-            y=133,
+            x=777,
+            y=156,
             width=51,
             height=87,
 
@@ -40,8 +68,8 @@ SheetInfo.sheet =
         },
         {
             -- carrot02
-            x=445,
-            y=2,
+            x=1612,
+            y=141,
             width=123,
             height=131,
 
@@ -52,7 +80,7 @@ SheetInfo.sheet =
         },
         {
             -- carrot03
-            x=65,
+            x=1233,
             y=2,
             width=145,
             height=143,
@@ -64,8 +92,8 @@ SheetInfo.sheet =
         },
         {
             -- carrot04
-            x=184,
-            y=147,
+            x=77,
+            y=179,
             width=151,
             height=87,
 
@@ -76,8 +104,8 @@ SheetInfo.sheet =
         },
         {
             -- celery01
-            x=970,
-            y=190,
+            x=1737,
+            y=216,
             width=27,
             height=53,
 
@@ -88,8 +116,8 @@ SheetInfo.sheet =
         },
         {
             -- celery02
-            x=438,
-            y=141,
+            x=585,
+            y=159,
             width=61,
             height=113,
 
@@ -100,7 +128,7 @@ SheetInfo.sheet =
         },
         {
             -- celery03
-            x=212,
+            x=1380,
             y=2,
             width=71,
             height=143,
@@ -112,7 +140,7 @@ SheetInfo.sheet =
         },
         {
             -- celery04
-            x=285,
+            x=1453,
             y=2,
             width=73,
             height=139,
@@ -124,8 +152,8 @@ SheetInfo.sheet =
         },
         {
             -- gopher
-            x=790,
-            y=129,
+            x=1372,
+            y=147,
             width=89,
             height=125,
 
@@ -135,9 +163,29 @@ SheetInfo.sheet =
             sourceHeight = 175
         },
         {
+            -- icon
+            x=767,
+            y=2,
+            width=152,
+            height=152,
+
+        },
+        {
+            -- jalapenos03
+            x=318,
+            y=2,
+            width=141,
+            height=157,
+
+            sourceX = 18,
+            sourceY = 2,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
             -- lettuce01
-            x=881,
-            y=204,
+            x=1818,
+            y=162,
             width=51,
             height=49,
 
@@ -148,8 +196,8 @@ SheetInfo.sheet =
         },
         {
             -- lettuce02
-            x=707,
-            y=133,
+            x=1757,
+            y=2,
             width=81,
             height=79,
 
@@ -160,8 +208,8 @@ SheetInfo.sheet =
         },
         {
             -- lettuce03
-            x=337,
-            y=143,
+            x=230,
+            y=161,
             width=99,
             height=109,
 
@@ -172,8 +220,8 @@ SheetInfo.sheet =
         },
         {
             -- lettuce04
-            x=846,
-            y=2,
+            x=1086,
+            y=149,
             width=157,
             height=123,
 
@@ -184,7 +232,7 @@ SheetInfo.sheet =
         },
         {
             -- mallet
-            x=360,
+            x=1528,
             y=2,
             width=83,
             height=137,
@@ -195,9 +243,69 @@ SheetInfo.sheet =
             sourceHeight = 175
         },
         {
+            -- moonflower03
+            x=151,
+            y=2,
+            width=165,
+            height=157,
+
+            sourceX = 6,
+            sourceY = 7,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- potatoes01
+            x=1840,
+            y=2,
+            width=55,
+            height=73,
+
+            sourceX = 50,
+            sourceY = 55,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- potatoes02
+            x=1666,
+            y=2,
+            width=89,
+            height=129,
+
+            sourceX = 34,
+            sourceY = 10,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- potatoes03
+            x=1080,
+            y=2,
+            width=151,
+            height=145,
+
+            sourceX = 8,
+            sourceY = 1,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- potatoes04
+            x=648,
+            y=159,
+            width=127,
+            height=95,
+
+            sourceX = 24,
+            sourceY = 49,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
             -- radish01
-            x=970,
-            y=127,
+            x=1978,
+            y=156,
             width=47,
             height=61,
 
@@ -209,7 +317,7 @@ SheetInfo.sheet =
         {
             -- radish02
             x=2,
-            y=157,
+            y=179,
             width=73,
             height=93,
 
@@ -220,8 +328,8 @@ SheetInfo.sheet =
         },
         {
             -- radish03
-            x=570,
-            y=2,
+            x=1463,
+            y=143,
             width=147,
             height=129,
 
@@ -232,8 +340,8 @@ SheetInfo.sheet =
         },
         {
             -- radish04
-            x=501,
-            y=135,
+            x=933,
+            y=155,
             width=151,
             height=117,
 
@@ -244,8 +352,8 @@ SheetInfo.sheet =
         },
         {
             -- rock
-            x=77,
-            y=147,
+            x=331,
+            y=161,
             width=105,
             height=107,
 
@@ -256,94 +364,212 @@ SheetInfo.sheet =
         },
         {
             -- seeds
-            x=654,
-            y=222,
-            width=31,
-            height=23,
+            x=830,
+            y=156,
+            width=101,
+            height=83,
 
-            sourceX = 75,
-            sourceY = 70,
+            sourceX = 37,
+            sourceY = 56,
             sourceWidth = 175,
             sourceHeight = 175
         },
         {
-            -- smell
-            x=881,
-            y=127,
-            width=87,
+            -- smell01
+            x=1923,
+            y=79,
+            width=99,
             height=75,
 
-            sourceX = 38,
+            sourceX = 34,
+            sourceY = 15,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- smell02
+            x=1871,
+            y=162,
+            width=105,
+            height=75,
+
+            sourceX = 32,
+            sourceY = 15,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- smell03
+            x=1818,
+            y=83,
+            width=103,
+            height=77,
+
+            sourceX = 33,
+            sourceY = 13,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- smell04
+            x=1923,
+            y=2,
+            width=101,
+            height=75,
+
+            sourceX = 34,
+            sourceY = 14,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- sunflower03
+            x=2,
+            y=2,
+            width=147,
+            height=175,
+
+            sourceX = 9,
             sourceY = 0,
             sourceWidth = 175,
             sourceHeight = 175
         },
         {
             -- tag
-            x=2,
+            x=1613,
             y=2,
-            width=61,
-            height=153,
+            width=51,
+            height=135,
 
-            sourceX = 62,
-            sourceY = 12,
+            sourceX = 114,
+            sourceY = 10,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- tomatos01
+            x=1737,
+            y=133,
+            width=79,
+            height=81,
+
+            sourceX = 49,
+            sourceY = 75,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- tomatos02
+            x=622,
+            y=2,
+            width=143,
+            height=155,
+
+            sourceX = 6,
+            sourceY = 0,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- tomatos03
+            x=461,
+            y=2,
+            width=159,
+            height=155,
+
+            sourceX = 2,
+            sourceY = 0,
+            sourceWidth = 175,
+            sourceHeight = 175
+        },
+        {
+            -- tomatos04
+            x=438,
+            y=161,
+            width=145,
+            height=95,
+
+            sourceX = 10,
+            sourceY = 64,
             sourceWidth = 175,
             sourceHeight = 175
         },
     },
 
-    sheetContentWidth = 1019,
-    sheetContentHeight = 256
+    sheetContentWidth = 2027,
+    sheetContentHeight = 274
 }
 
 SheetInfo.frameIndex =
 {
 
-    ["blank"] = 1,
-    ["carrot01"] = 2,
-    ["carrot02"] = 3,
-    ["carrot03"] = 4,
-    ["carrot04"] = 5,
-    ["celery01"] = 6,
-    ["celery02"] = 7,
-    ["celery03"] = 8,
-    ["celery04"] = 9,
-    ["gopher"] = 10,
-    ["lettuce01"] = 11,
-    ["lettuce02"] = 12,
-    ["lettuce03"] = 13,
-    ["lettuce04"] = 14,
-    ["mallet"] = 15,
-    ["radish01"] = 16,
-    ["radish02"] = 17,
-    ["radish03"] = 18,
-    ["radish04"] = 19,
-    ["rock"] = 20,
-    ["seeds"] = 21,
-    ["smell"] = 22,
-    ["tag"] = 23,
+    ["arrow-left"] = 1,
+    ["arrow-right"] = 2,
+    ["barren"] = 3,
+    ["blank"] = 4,
+    ["carrot01"] = 5,
+    ["carrot02"] = 6,
+    ["carrot03"] = 7,
+    ["carrot04"] = 8,
+    ["celery01"] = 9,
+    ["celery02"] = 10,
+    ["celery03"] = 11,
+    ["celery04"] = 12,
+    ["gopher"] = 13,
+    ["icon"] = 14,
+    ["jalapenos03"] = 15,
+    ["lettuce01"] = 16,
+    ["lettuce02"] = 17,
+    ["lettuce03"] = 18,
+    ["lettuce04"] = 19,
+    ["mallet"] = 20,
+    ["moonflower03"] = 21,
+    ["potatoes01"] = 22,
+    ["potatoes02"] = 23,
+    ["potatoes03"] = 24,
+    ["potatoes04"] = 25,
+    ["radish01"] = 26,
+    ["radish02"] = 27,
+    ["radish03"] = 28,
+    ["radish04"] = 29,
+    ["rock"] = 30,
+    ["seeds"] = 31,
+    ["smell01"] = 32,
+    ["smell02"] = 33,
+    ["smell03"] = 34,
+    ["smell04"] = 35,
+    ["sunflower03"] = 36,
+    ["tag"] = 37,
+    ["tomatos01"] = 38,
+    ["tomatos02"] = 39,
+    ["tomatos03"] = 40,
+    ["tomatos04"] = 41,
 }
+
 
 SheetInfo.sequenceData =
 {
-    { name="seqBlank", frames={ 1 }},
-    { name="seqCarrot", frames = {2, 3, 4, 5}},
-    { name="seqCelery", frames = {6, 7, 8, 9}},
-    { name="seqBarren", frames = {9}},
-    { name="seqGopher", frames = { 10 }},
-    { name="seqLettuce", frames={11, 12, 13, 14}},
-    { name="seqMallet", frames={ 15 }},
-    { name="seqRadish", frames={16, 17, 18, 19}},
-    { name="seqRock", frames={ 20 }},
-    { name="seqSeeds", frames={ 21 }},
-    { name="seqSmell", frames={ 22 }},
-    { name="seqTag", frames={ 23 }},
+    { name="arrow-left", frames={ 1 }},
+    { name="arrow-right", frames={ 2 }},
+    { name="seqBarren", frames={ 3 }},
+    { name="seqBlank", frames={ 4 }},
+    { name="seqCarrot", frames = {5, 6, 7, 8}},
+    { name="seqCelery", frames = {9, 10, 11, 12}},
+    { name="seqGopher", frames = { 13 }},
+    { name="icon", frames={ 14 }},
+    { name="seqLettuce", frames={16, 17, 18, 19}},
+    { name="seqMallet", frames={ 20 }},
+    { name="seqPotato", frames={ 22, 23, 24 , 25}},
+    { name="seqRadish", frames={26, 27, 28, 29}},
+    { name="seqRock", frames={ 30 }},
+    { name="seqSeeds", frames={ 31 }},
+    { name="seqSmell", frames={33, 34, 35, 36 }, time=225},
+    { name="seqTag", frames={ 38 }},
 }
 
 function SheetInfo:getSequenceData()
     return self.sequenceData;
 end
-
 
 function SheetInfo:getSheet()
     return self.sheet;
