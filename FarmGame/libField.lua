@@ -3,6 +3,7 @@ require 'fields'
 require 'fieldEvents'
 
 Field = class(function(field, type)
+        print('--@Field init: type =')
         print(type)
         tmp = fields[type]
         for i, v in pairs(tmp) do
@@ -10,16 +11,22 @@ Field = class(function(field, type)
         end
         print('ROWS: '..field.rows)
         field.turns = 0
+        field.gophers = 0
         field.grid = {}
+        bg = display.newImage(field.bg)
+        bg.x = centerX
+        bg.y = centerY
+        bg.width = display.contentWidth
+        bg.height = display.contentHeight
+        layers.field:insert(bg)
+        print('ROWS: '..field.rows)
         return field
     end)
 
 function Field:fill()
-    print(self.rows)
     for i=1,self.rows do
         self.grid[i] = {}
         for j=1,self.columns do
-            print(i,j)
             self.grid[i][j]={}
             --local tmp = createSquare(layers.field, 'static', i..','..j)
             x = self.X + (i-1)*((self.W/self.columns)-6)
@@ -31,7 +38,6 @@ function Field:fill()
     end
     self.first = self.grid[1][1]
     square = self.first
-    print(square.id)
     while square do
         square:initialize()
         square = square.next
@@ -97,16 +103,18 @@ function Field:nextDay()
     end
     theField:cleanup()
     theField.turns = theField.turns + 1
-    if theField.turns >5 and theField.turns < 20 then
-        rnd = math.random(1, 20)
-        if rnd==1 then
-            spawnGopher()
+    if theField.gophers < 3 then
+        if theField.turns >5 and theField.turns < 20 then
+            rnd = math.random(1, 20)
+            if rnd==1 then
+                spawnGopher()
+            end
         end
-    end
-    if theField.turns > 20 then
-        rnd = math.random(1, 10)
-        if rnd==1 then
-            spawnGopher()
+        if theField.turns > 20 then
+            rnd = math.random(1, 10)
+            if rnd==1 then
+                spawnGopher()
+            end
         end
     end
 end

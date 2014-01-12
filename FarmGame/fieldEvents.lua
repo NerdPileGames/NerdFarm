@@ -12,6 +12,7 @@ function spawnGopher()
     end
     print(x, y)
     tmp:setImage("Gopher", 0)
+    theField.gophers = theField.gophers + 1
 end
 
 function moveGopher(id)
@@ -21,7 +22,7 @@ function moveGopher(id)
         tmp = theField.grid[newX][newY].sprite
         print('--@moveGopher: checking '..newX..','..newY..' for gopher move.')
         print('--@moveGopher: type= '..tmp.myType..' and pest proof = ',tmp.pestProof)
-        if not tmp.pestProof and tmp.id~=id and not (newX..','..newY)==clickedID then
+        if not tmp.pestProof and tmp.id~=id and (newX..','..newY)~=clickedID then
             break
         end
     end
@@ -35,6 +36,7 @@ end
 
 function killGopher(id)
     getSquare(id):setImage("Rock", 0)
+    theField.gophers = theField.gophers - 1
 end
 
 function onSquareTouch(self, event)
@@ -81,7 +83,7 @@ function onSquareTouch(self, event)
             theField:nextDay()
         end
         if not self.empty then
-            if nextElement == 'Mallet' then
+            if nextElement == 'Mallet' and self.myStage ~= Plants.mature then
                 print('--@onSquareTouch: Mallet')
                 -- Use the mallet on a Gopher *SMACK*
                 if self.myType=="Gopher" then
@@ -98,7 +100,7 @@ function onSquareTouch(self, event)
                     theQueue:nextEntry()
                 end
                 theField:nextDay()
-            elseif self.myStage==3 then
+            elseif self.myStage==Plants.mature then
                 print("--@onSquareTouch: harvest")
                 clickAction = "harvest"
                 theField:nextDay()

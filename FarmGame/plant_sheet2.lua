@@ -558,11 +558,11 @@ SheetInfo.sequenceData =
     { name="icon", frames={ 14 }},
     { name="seqLettuce", frames={16, 17, 18, 19}},
     { name="seqMallet", frames={ 20 }},
-    { name= "potatoes", frames={ 22, 23, 24 , 25}},
+    { name="seqPotato", frames={ 22, 23, 24 , 25}},
     { name="seqRadish", frames={26, 27, 28, 29}},
     { name="seqRock", frames={ 30 }},
     { name="seqSeeds", frames={ 31 }},
-    { name="seqSmell", frames={ 32, 33, 34, 35, 36 }},
+    { name="seqSmell", frames={33, 34, 35, 36 }, time=225},
     { name="seqTag", frames={ 38 }},
 }
 

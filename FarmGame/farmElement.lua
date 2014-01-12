@@ -9,6 +9,13 @@ FarmElement = class(function(elem, x, y, i, j)
             sprite.empty = true
             sprite.x = x
             sprite.y = y
+            local decorator = display.newSprite(myImageSheet,
+                sheetInfo:getSequenceData())
+            decorator:setSequence("seqBlank")
+            decorator.alpha = .1
+            decorator.x = x
+            decorator.y = y
+
             sprite.row = j
             sprite.column = i
             sprite.id = i..','..j
@@ -31,7 +38,11 @@ FarmElement = class(function(elem, x, y, i, j)
             sprite.next = false
             sprite.touch = onSquareTouch
             sprite:addEventListener("touch", sprite)
+
+            layers.field:insert(sprite)
+            layers.overlays:insert(decorator)
             elem.sprite = sprite
+            elem.decorator = decorator
             return elem
             end)
 
@@ -122,6 +133,13 @@ function FarmElement:setImage(type, phase)
         else
             self:setSequence('seq'..type)
             self:setFrame(phase)
+            if self.sprite.myStage == Plants.rot then
+                self:setDecorator('smell')
+            elseif self.sprite.myStage == Plants.mature then
+                --self:setDecorator('tag')
+            else
+                self:clearDecorator()
+            end
         end
     else
         print(sprite.id..' is pest proof... cus its a '..type)
@@ -157,6 +175,24 @@ function FarmElement:makeBarren()
     print("Make Barren")
     self:setSequence('seqBarren')
     self:setFrame(1)
+    self:clearDecorator()
     self.sprite.isBarren=true
     self.sprite.myProgress=0
+end
+
+function FarmElement:setDecorator(dec)
+    if dec == 'smell' then
+        self.decorator:setSequence('seqSmell')
+        self.decorator:play()
+        self.decorator.alpha=1
+    elseif dec == 'tag' then
+        print('--@FarmElement:setDecorator:  set Tag')
+        self.decorator:setSequence('seqTag')
+        self.decorator.alpha = 1
+    end
+end
+
+function FarmElement:clearDecorator()
+    self.decorator:setSequence('seqBlank')
+    self.decorator.alpha = .1
 end

@@ -24,6 +24,7 @@ function libQueue:initialize() --push to fill the queue to the specified number
 end
 
 function libQueue:nextEntry() --push and pop, return the queue and the element that was popped
+    theField:updateWeights()
     for i=1, self.length-1 do
         self[i].square_type = self[i+1].square_type
     end
@@ -42,6 +43,7 @@ function libQueue:pickNext()  --pick the next element in the queue based on weig
     local rand = math.random(1,total_weight)
     for n in pairs(self.weights) do
         if rand < used + self.weights[n] then
+            print('--@libQueue:pickNext()   added '..n..' to queue')
             return {square_type=n}
         else
             used = used + self.weights[n]
