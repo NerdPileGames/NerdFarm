@@ -155,7 +155,7 @@ function FarmElement:setImage(type, phase)
             self:setFrame(phase)
             if self.sprite.myStage == Plants.rot then
                 self:setDecorator('smell')
-            elseif self.sprite.myStage == Plants.mature then
+            elseif self.sprite.myStage == Plants.mature then 
                 self:setDecorator('tag')
             else
                 self:clearDecorator()
@@ -165,6 +165,7 @@ function FarmElement:setImage(type, phase)
         print(sprite.id..' is pest proof... cus its a '..type)
         self:setSequence('seq'..type)
         sprite.pestProof=true
+        self:clearDecorator()
     end
     sprite.myStage = phase
     if sprite.myStage==Plants.rot then
@@ -214,6 +215,7 @@ function FarmElement:setDecorator(dec)
 end
 
 function FarmElement:clearDecorator()
+    print('clearing decorator '..self.sprite.id)
     self.decorator:setSequence('seqBlank')
     self.decorator.alpha = .1
 end
