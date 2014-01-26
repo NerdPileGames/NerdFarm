@@ -67,11 +67,38 @@ fields.Pumpkin = {
     Queue = {X = 175, Y=425, W=100},
     Basket = {X = 175, Y=626, W=100},
 }
+    
 function fields.Stew.updateWeights(queue, field)
     theQueue.weights.Mallet = 5*theField.gophers
     plants = 100-theQueue.weights.Mallet
     theQueue.weights.Potato = math.floor(plants/3)
     theQueue.weights.Carrot = math.floor(plants/3)
     theQueue.weights.Celery = 100-2*math.floor(plants/3)
+    print('--fields.lua def:  updateWeights')
+end
+
+fields.JoshTestField = {
+    allowedPlants = {'Lettuce', 'Radish', 'Celery', 'Potato', 'Carrot'},
+    pests = {'Gopher'},
+    rows = 5,
+    columns = 5,
+    initialWeights = {Lettuce=18, Radish=18, Potato =18, Carrot = 18, Celery = 18, Mallet=10},
+    Weights = initialWeights,
+    X = 380,
+    Y = 126,
+    W = 625,
+    H = 625,
+    bg = 'images/fieldGrid.png',
+    thumb = 'images/fieldPreviewSalad.png',
+    Queue = {X = 175, Y=425, W=100},
+    Basket = {X = 175, Y=626, W=100},
+    blocked = {{3, 3}, {3, 4}, {4, 3}, {4, 4}},
+}   
+
+function fields.JoshTestField.updateWeights()
+    theQueue.weights.Mallet = 5*theField.gophers
+    plants = 100-theQueue.weights.Mallet
+    theQueue.weights.Lettuce = math.floor(plants/2)
+    theQueue.weights.Radish = math.ceil(plants/2)
     print('--fields.lua def:  updateWeights')
 end
